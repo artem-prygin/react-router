@@ -81,9 +81,13 @@ createServer({
     });
 
     this.get('/host/vans/:id', (schema, request) => {
+
+      throw new Error({
+        message: 'asdasdasd',
+      });
       // Hard-code the hostId for now
-      const id = request.params.id;
-      return schema.vans.findBy({ id, hostId: '123' });
+      // const id = request.params.id;
+      // return schema.vans.findBy({ id, hostId: '123' });
     });
   },
 });
