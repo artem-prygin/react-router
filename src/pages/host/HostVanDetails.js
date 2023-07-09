@@ -1,4 +1,9 @@
 import { useOutletContext } from 'react-router';
+import { getVans } from '../../api';
+
+export function loader({ params }) {
+  return getVans(params.id);
+}
 
 function HostVansDetails() {
   const vanDetails = useOutletContext();
