@@ -1,18 +1,18 @@
 import React, { Suspense } from 'react';
-import { Link, Await, useLoaderData } from 'react-router-dom';
+import { Link, Await, useLoaderData, defer } from 'react-router-dom';
 import { getHostVans } from '../../api/api';
 import { BsStarFill } from 'react-icons/bs';
+import { requireAuth } from '../../utils/utils';
 
 export async function loader({ request }) {
-  return getHostVans();
+  await requireAuth(request);
+  return defer({ vans: getHostVans() });
 }
 
 export default function Dashboard() {
   const loaderData = useLoaderData();
 
   function renderVanElements(vans) {
-    // console.log(vans);
-
     const hostVansEls = vans?.map((van) => (
         <div className="host-van-single"
              key={van.id}>
