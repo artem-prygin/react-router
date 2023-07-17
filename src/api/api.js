@@ -14,6 +14,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const vansCollectionRef = collection(db, 'vans');
+const usersCollectionRef = collection(db, 'users');
 
 export async function getVans() {
   const vansSnapshot = await getDocs(vansCollectionRef);
@@ -47,19 +48,17 @@ export async function getHostVans() {
 }
 
 export async function loginUser(creds) {
-  const res = await fetch('/api/login', {
-    method: 'post',
-    body: JSON.stringify(creds),
+  const q = query(
+      usersCollectionRef,
+      where('email', '==', creds.email),
+      where('password', '==', creds.password),
+  );
+  const userDataSnapshot = await getDocs(q);
+
+  return userDataSnapshot.docs.map(doc => {
+    return {
+      ...doc.data(),
+      id: doc.id,
+    };
   });
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw new Error({
-      message: data,
-      statusText: res.statusText,
-      status: res.status,
-    });
-  }
-
-  return data;
 }
