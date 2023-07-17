@@ -1,12 +1,14 @@
 import { useOutletContext } from 'react-router';
-import { getVans } from '../../api';
+import { getVan } from '../../api/api';
+import { requireAuth } from '../../utils/utils';
 
-export function loader({ params }) {
-  return getVans(params.id);
+export async function loader({ params, request }) {
+  await requireAuth(request);
+  return getVan(params.id);
 }
 
 function HostVansDetails() {
-  const vanDetails = useOutletContext();
+  const { vanDetails } = useOutletContext();
 
   return (
       <section className="host-van-detail-info">

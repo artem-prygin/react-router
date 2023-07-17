@@ -1,9 +1,9 @@
 import { useLocation } from 'react-router';
 import { Link, useLoaderData } from 'react-router-dom';
-import { getVans } from '../api';
+import { getVan } from '../../api/api';
 
 export function loader({ params }) {
-  return getVans(params.id);
+  return getVan(params.id);
 }
 
 function VanDetail() {
@@ -21,17 +21,15 @@ function VanDetail() {
               relative="path"
               className="back-button">&larr; <span>Back to {getVansFilterName()} vans</span></Link>
 
-        {van ? (
-            <div className="van-detail">
-              <img src={van.imageUrl}
-                   alt={van.name} />
-              <i className={`van-type ${van.type} selected`}>{van.type}</i>
-              <h2>{van.name}</h2>
-              <p className="van-price"><span>${van.price}</span>/day</p>
-              <p>{van.description}</p>
-              <button className="link-button">Rent this van</button>
-            </div>
-        ) : <h2>Loading...</h2>}
+        <div className="van-detail">
+          <img src={van.imageUrl}
+               alt={van.name} />
+          <i className={`van-type ${van.type} selected`}>{van.type}</i>
+          <h2>{van.name}</h2>
+          <p className="van-price"><span>${van.price}</span>/day</p>
+          <p>{van.description}</p>
+          <button className="link-button">Rent this van</button>
+        </div>
       </div>
   );
 }

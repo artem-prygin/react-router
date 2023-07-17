@@ -1,13 +1,9 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import userIcon from '../assets/images/user-icon.svg';
+import { activeStyles } from '../constants/constants';
 
 export default function Header() {
-  const activeStyles = {
-    fontWeight: 'bold',
-    textDecoration: 'underline',
-    color: '#161616',
-  };
-
   return (
       <header>
         <Link className="site-logo"
@@ -17,20 +13,25 @@ export default function Header() {
                    style={({ isActive }) => isActive ? activeStyles : null}>
             Host
           </NavLink>
+
           <NavLink to="about"
                    style={({ isActive }) => isActive ? activeStyles : null}>
             About
           </NavLink>
+
           <NavLink to="vans"
                    style={({ isActive }) => isActive ? activeStyles : null}>
             Vans
           </NavLink>
+
           <Link to="login"
                 className="login-link">
             <img alt="user icon"
-                 src="/assets/user-icon.svg"
+                 src={userIcon}
                  className="login-icon" />
           </Link>
+
+          <button onClick={() => localStorage.removeItem('loggedIn')}>Log out</button>
         </nav>
       </header>
   );
